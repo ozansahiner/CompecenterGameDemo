@@ -4,43 +4,46 @@ using UnityEngine;
 
 public class Kapi : MonoBehaviour
 {
-	public Animator animator; // Kapýyý açmak ve kapatmak için Animator bileþenini kullanacaðýz
-	private bool isOpen = true; // Kapýnýn açýk olup olmadýðýný kontrol etmek için
+    public Animator animator; // Kapýyý açmak ve kapatmak için Animator bileþenini kullanacaðýz
+    private bool isOpen = true; // Kapýnýn açýk olup olmadýðýný kontrol etmek için
+    private Collider2D doorCollider; // Kapýnýn 2D Collider bileþeni
 
-	void Start()
-	{
-		// Animator bileþenini al
-		animator = GetComponent<Animator>();
-	}
+    void Start()
+    {
+        // Animator ve Collider bileþenlerini al
+        animator = GetComponent<Animator>();
+        doorCollider = GetComponent<Collider2D>();
 
-	void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.E))
-		{
-			if (isOpen)
-			{
-				Debug.Log("Kapi kapaniyor");
-				CloseDoor();
-			}
-			else
-			{
-				Debug.Log("Kapi aciliyor");
-				OpenDoor();
-			}
-		}
-	}
+        // Kapý kapalýyken Collider'ý etkinleþtir
+        doorCollider.enabled = true;
+    }
 
-	void OpenDoor()
-	{
-		animator.SetBool("isOpen", true); // Animator'da "isOpen" parametresini true yaparak kapýyý aç
-		isOpen = true;
-		Debug.Log("isOpen parametresi true yapildi");
-	}
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (!isOpen)
+            {
+                OpenDoor();
+            }
+            else
+            {
+                CloseDoor();
+            }
+        }
+    }
 
-	void CloseDoor()
-	{
-		animator.SetBool("isOpen", false); // Animator'da "isOpen" parametresini false yaparak kapýyý kapat
-		isOpen = false;
-		Debug.Log("isOpen parametresi false yapildi");
-	}
+    void OpenDoor()
+    {
+        animator.SetBool("isOpen", true); // Animator'da "isOpen" parametresini true yaparak kapýyý aç
+        doorCollider.enabled = true; // Kapý açýldýðýnda Collider'ý devre dýþý býrak
+        isOpen = true;
+    }
+
+    void CloseDoor()
+    {
+        animator.SetBool("isOpen", false); // Animator'da "isOpen" parametresini false yaparak kapýyý kapat
+        doorCollider.enabled = false; // Kapý kapandýðýnda Collider'ý etkinleþtir
+        isOpen = false;
+    }
 }
