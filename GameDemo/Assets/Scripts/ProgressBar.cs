@@ -19,11 +19,11 @@ public class LevelBarController : MonoBehaviour
 		}
 	}
 
-	public void SetLevelBarValue(float value)
+	/*public void SetLevelBarValue(float value)
 	{
 		if (levelBar != null)
 		{
 			levelBar.value = value;
 		}
-	}
+	}*/
 }
