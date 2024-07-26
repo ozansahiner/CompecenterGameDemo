@@ -2,8 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelMove_Ref : MonoBehaviour
-	// yukarý çýkma kodu //
+public class LevelMove : MonoBehaviour
 {
 	public int sceneBuildIndex;
 	private GameObject player;
@@ -17,7 +16,6 @@ public class LevelMove_Ref : MonoBehaviour
 		{
 			// Ensure the player object is not destroyed on scene load
 			DontDestroyOnLoad(player);
-			Debug.Log("Player found and DontDestroyOnLoad set.");
 		}
 		else
 		{
@@ -74,11 +72,12 @@ public class LevelMove_Ref : MonoBehaviour
 	{
 		// Virtual Camera'yý bul ve hedefini ayarla
 		var virtualCamera = FindObjectOfType<Cinemachine.CinemachineVirtualCamera>();
+		var player = GameObject.FindGameObjectWithTag("Player");
+
 
 		if (virtualCamera != null)
 		{
 			virtualCamera.Follow = player.transform;
-			virtualCamera.LookAt = player.transform;
 			Debug.Log("Virtual Camera target reassigned to player.");
 		}
 		else
